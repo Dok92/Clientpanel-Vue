@@ -5,16 +5,18 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">Name</th>
-            <th class="text-left">Email</th>
-            <th class="text-left">Balance</th>
-            <th class="text-left">*Details</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Balance</th>
+            <th><i class="mdi mdi-account-circle pr-1"></i>Details</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
+            <td>John Doe</td>
+            <td>john@gmail.com</td>
+            <td>100</td>
+            <td><v-icon>mdi mdi-account-search</v-icon></td>
           </tr>
         </tbody>
       </template>
@@ -27,6 +29,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  thead tr th {
+    font-size: 20px;
+  }
+  tbody tr td {
+    font-size: 16px;
+  }
 </style>
