@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-      <AppNavbar />
+  <v-app id="app">
+    <AppNavbar />
     <v-content>
       <router-view />
     </v-content>
@@ -8,16 +8,15 @@
 </template>
 
 <script>
-import AppNavbar from './views/AppNavbar'
+import AppNavbar from "./views/AppNavbar";
 export default {
-  name: 'App',
-
+  name: "App",
   components: {
-    AppNavbar,
+    AppNavbar
   },
 
   data: () => ({
     //
-  }),
+  })
 };
 </script>
