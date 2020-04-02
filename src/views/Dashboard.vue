@@ -1,5 +1,5 @@
 <template>
-  <div>   
+  <div>
     <v-container>
       <v-row justify="center" class="lg-10">
         <v-col lg="9">
@@ -12,22 +12,21 @@
             <Sidebar />
           </v-card>
         </v-col>
-        </v-row>
+      </v-row>
     </v-container>
   </div>
 </template>
 
-
+  
 <script>
-import Clients from '@/components/Clients'
-import Sidebar from '@/components/Sidebar'
+import Clients from "@/components/Clients";
+import Sidebar from "@/components/Sidebar";
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Clients,
     Sidebar
   }
-
 };
 </script>
 

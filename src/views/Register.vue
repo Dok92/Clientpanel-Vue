@@ -30,6 +30,10 @@
               class="mr-4"
               @click="validate"
             >Register</v-btn>
+            <v-snackbar color="error" class="snackbar" v-model="snackbar" :timeout="timeout">
+              {{ text }}
+              <v-btn text @click="snackbar = false">CLOSE</v-btn>
+            </v-snackbar>
           </v-form>
         </v-container>
       </v-card>
@@ -55,7 +59,10 @@ export default {
     rules: {
       required: value => !!value || "Required.",
       min: v => v.length >= 8 || "Min 8 characters"
-    }
+    },
+    snackbar: false,
+    text: "",
+    timeout: 5000
   }),
   methods: {
     signin() {
@@ -66,7 +73,10 @@ export default {
         .then(() => {
           return this.$router.push({ name: "Dashboard" });
         })
-        .catch(err => console.log("That User Already Exists", err));
+        .catch(e => {
+          this.snackbar = true;
+          this.text = e.message;
+        });
     },
     validate() {
       this.$refs.form.validate();
@@ -76,4 +86,8 @@ export default {
 </script>
 
 <style>
+.snackbar {
+  color: white;
+  margin-bottom: 15px;
+}
 </style>

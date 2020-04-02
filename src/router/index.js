@@ -1,3 +1,5 @@
+import firebase from 'firebase/app'
+import "@firebase/auth"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '@/views/Dashboard'
@@ -14,22 +16,34 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/client/add',
     name: 'AddClient',
-    component: AddClient
+    component: AddClient,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/client/edit/:id',
     name: 'EditClient',
-    component: EditClient
+    component: EditClient,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/client/:id',
     name: 'ClientDetails',
-    component: ClientDetails
+    component: ClientDetails,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/login',
@@ -44,13 +58,28 @@ const routes = [
   {
     path: '/settings',
     name: 'Settings',
-    component: Settings
+    component: Settings,
+    meta: {
+      requiresAuth: true,
+    }
   },
 ]
 
 const router = new VueRouter({
   history: 'true',
   routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    if (firebase.auth().currentUser !== null) {
+      next();
+    } else {
+      next({ name: 'Login' });
+    }
+  } else
+    next();
 })
 
 export default router
