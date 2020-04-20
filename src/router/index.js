@@ -3,9 +3,6 @@ import "@firebase/auth"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '@/views/Dashboard'
-import AddClient from '@/views/AddClient'
-import EditClient from '@/views/EditClient'
-import ClientDetails from '@/views/ClientDetails'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Settings from '@/views/Settings'
@@ -20,30 +17,6 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-  },
-  {
-    path: '/client/add',
-    name: 'AddClient',
-    component: AddClient,
-    meta: {
-      requiresAuth: true,
-    }
-  },
-  {
-    path: '/client/edit/:id',
-    name: 'EditClient',
-    component: EditClient,
-    meta: {
-      requiresAuth: true,
-    }
-  },
-  {
-    path: '/client/:id',
-    name: 'ClientDetails',
-    component: ClientDetails,
-    meta: {
-      requiresAuth: true,
-    }
   },
   {
     path: '/login',

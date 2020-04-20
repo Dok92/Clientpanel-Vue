@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons'
 import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
+import "@firebase/firestore";
 
 var firebaseConfig = {
   apiKey: "AIzaSyBjCoARz4iyw_Za3TJ74lSc-EK4aof5VWg",
@@ -40,5 +41,5 @@ firebase.auth().onAuthStateChanged(() => {
   }
 })
 
-export default firebaseApp
+export default firebaseApp.firestore()
 

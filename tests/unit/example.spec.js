@@ -1,12 +1,20 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+test('fake test', () => {
+  expect(true).toBeTruthy()
+  expect(true).
+});
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
-})
+
+
+
+
+
+
+
+/**
+*   TODO fdsfsddfssdfs skdfsdfsdfdsfsdf
+* * Extra good comment
+*   regular comment
+* ! important error ahead
+* ? needs to return truthy value
+* @param {string} firestore sdfsdfsdfsdfsdfsf
+*/

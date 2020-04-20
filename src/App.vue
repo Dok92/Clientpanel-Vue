@@ -14,9 +14,11 @@ export default {
   components: {
     AppNavbar
   },
-
   data: () => ({
     //
-  })
+  }),
+  created() {
+    this.$vuetify.theme.dark = true
+  }
 };
 </script>

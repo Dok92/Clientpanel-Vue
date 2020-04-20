@@ -4,15 +4,16 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link :to="{name: 'Dashboard'}">
-          <h3 class="white--text">ClientPanel</h3>
+          <h3 class="white--text">
+            <v-icon class="mr-1">mdi-account-multiple</v-icon>ClientPanel
+          </h3>
         </router-link>
       </v-toolbar-title>
-
       <v-menu left bottom></v-menu>
+      <v-spacer></v-spacer>
     </v-app-bar>
     <v-navigation-drawer
       app
-      dark
       v-model="drawer"
       absolute
       temporary
@@ -80,6 +81,8 @@
 import firebase from "firebase/app";
 export default {
   name: "AppNavbar",
+  components: {
+  },
   data() {
     return {
       isAuthenticated: null,
