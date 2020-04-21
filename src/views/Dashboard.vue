@@ -108,9 +108,8 @@
 </template>
 
 <script>
-
 import "@firebase/firestore";
-import db from "@/main";
+import db, { timestamp } from "@/main";
 export default {
   name: "Dashboard",
    data() {
@@ -130,7 +129,7 @@ export default {
 
       requiredRules: [
         value => !!value || "Required.",
-        v => /^([a-zA-Z]+?)([-\s'][a-zA-Z]+)*?$/.test(v) || "name required."
+        v => /^([a-zA-Z]+\ ?)([-\s'][a-zA-Z]+)*?$/.test(v) || "enter name correctly"
       ],
       balanceRules: [
         value => !!value || "Required.",
@@ -149,11 +148,15 @@ export default {
         name: null,
         balance: null,
         email: null,
+        phone: null,
+        id: null,
       },
       defaultItem: {
         name: null,
         balance: null,
         email: null,
+        phone: null,
+        id: null,
       }
      }
    },
@@ -167,7 +170,7 @@ export default {
         if (name == null) {
           return true
         }
-        else if (/^([a-zA-Z]+?)([-\s'][a-zA-Z]+)*?$/.test(name) &&
+        else if (/^([a-zA-Z]+\ ?)([-\s'][a-zA-Z]+)*?$/.test(name) &&
                  /^[0-9]*$/.test(balance) &&
                  (/.+@.+/.test(email) || email == null) &&
                  (/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/.test(phone) || phone == null)) {    
@@ -191,17 +194,20 @@ export default {
     },
 
     methods: {
-      initialize () {
+      initialize() {
       db.collection("clients")
       .get()
       .then(snap => {
         snap.forEach(doc => {
+          const { name, balance, email, phone, createdAt } = doc.data()
           this.clients.unshift({
-            name: doc.data().firstName + " " + doc.data().lastName,
-            email: doc.data().email,
-            balance: doc.data().balance,
-            phone: doc.data().phone
-          });
+            name,
+            balance,
+            email,
+            phone,
+            id: doc.id,
+            createdAt
+          });          
         });
       });      
       },
@@ -226,13 +232,44 @@ export default {
       },
 
       save () {
+        const { name, balance, email, phone } = this.editedItem
         if (this.editedIndex > -1) {
           Object.assign(this.clients[this.editedIndex], this.editedItem)
+          db.collection("clients").doc(this.clients[this.editedIndex].id)
+          .set({
+            name,
+            balance,
+            email,
+            phone
+          })
+
         } else {
-          this.clients.push(this.editedItem)
-        }
+           db.collection("clients").doc().set({
+            name,
+            balance,
+            email,
+            phone,
+            createdAt: timestamp()
+          })
+          .then(db.collection("clients")
+          .orderBy('createdAt', 'desc')
+          .limit(1)
+          .get()
+          .then(snap => {
+            snap.forEach(doc => {
+              const { name, balance, email, phone, createdAt } = doc.data()
+              this.clients.unshift({
+                name,
+                balance,
+                email,
+                phone,
+                id: doc.id,
+                createdAt
+              });                
+            })
+          }))
+        }        
         this.close()
-        // this.$refs.form.validate()
       },  
     },
   }

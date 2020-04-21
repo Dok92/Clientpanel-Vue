@@ -21,6 +21,7 @@ var firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 library.add(faUsersCog)
@@ -40,6 +41,6 @@ firebase.auth().onAuthStateChanged(() => {
     }).$mount('#app')
   }
 })
-
+export { timestamp }
 export default firebaseApp.firestore()
 
