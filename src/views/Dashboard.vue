@@ -149,14 +149,14 @@ export default {
         balance: null,
         email: null,
         phone: null,
-        id: null,
+        id: null
       },
       defaultItem: {
         name: null,
         balance: null,
         email: null,
         phone: null,
-        id: null,
+        id: null
       }
      }
    },
@@ -199,14 +199,13 @@ export default {
       .get()
       .then(snap => {
         snap.forEach(doc => {
-          const { name, balance, email, phone, createdAt } = doc.data()
+          const { name, balance, email, phone } = doc.data()
           this.clients.unshift({
             name,
             balance,
             email,
             phone,
-            id: doc.id,
-            createdAt
+            id: doc.id
           });          
         });
       });      
@@ -221,6 +220,7 @@ export default {
       deleteItem (item) {
         const index = this.clients.indexOf(item)
         confirm('Are you sure you want to delete this client?') && this.clients.splice(index, 1)
+        db.collection("clients").doc(this.clients[index].id).delete()
       },
 
       close () {                
@@ -232,7 +232,9 @@ export default {
       },
 
       save () {
+        // edit or add client depending on edited index
         const { name, balance, email, phone } = this.editedItem
+        // edit client
         if (this.editedIndex > -1) {
           Object.assign(this.clients[this.editedIndex], this.editedItem)
           db.collection("clients").doc(this.clients[this.editedIndex].id)
@@ -242,8 +244,8 @@ export default {
             email,
             phone
           })
-
         } else {
+           // set new client in firebase
            db.collection("clients").doc().set({
             name,
             balance,
@@ -251,20 +253,20 @@ export default {
             phone,
             createdAt: timestamp()
           })
+          // get last created client from firebase and update clients arr
           .then(db.collection("clients")
           .orderBy('createdAt', 'desc')
           .limit(1)
           .get()
           .then(snap => {
             snap.forEach(doc => {
-              const { name, balance, email, phone, createdAt } = doc.data()
+              const { name, balance, email, phone } = doc.data()
               this.clients.unshift({
                 name,
                 balance,
                 email,
                 phone,
-                id: doc.id,
-                createdAt
+                id: doc.id
               });                
             })
           }))
